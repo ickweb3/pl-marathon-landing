@@ -1,0 +1,1 @@
+export { Proyavys } from "./Proyavys";
