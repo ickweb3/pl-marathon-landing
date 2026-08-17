@@ -188,8 +188,9 @@ size stops being a design value and becomes a derived one.**
 
 ## Live
 
-**https://pl-marathon-landing.vercel.app** — the review preview, kept as-is.
-The final home is `marathon.pershiledy.com`.
+**https://marathon.pershiledy.com** — production (PL-775).
+`https://pl-marathon-landing.vercel.app` was the review preview and is no longer
+the reference copy.
 
 ## Assets and weight
 
@@ -246,27 +247,33 @@ Serve `dist/` at the domain root. Points worth knowing before you wire it up:
 - **Fonts are self-hosted** in `public/fonts` and preloaded from `index.html`.
   Serve them from the same origin, or the preloads miss and the first paint
   swaps faces. No Google Fonts request exists and none should be added.
-- **Three absolute URLs to swap on go-live.** `index.html` carries `og:image`,
-  `og:url` and `twitter:image` pointing at the preview host; they are marked
-  with a comment in the file. Repoint them at
-  `https://marathon.pershiledy.com/` or the social preview keeps advertising
-  `pl-marathon-landing.vercel.app`. Every other URL in the page is relative.
+- ~~**Three absolute URLs to swap on go-live.**~~ Done — `og:image`, `og:url` and
+  `twitter:image` now point at `https://marathon.pershiledy.com/`. Every other
+  URL in the page is relative.
 
-### Auto-deploy from this repo
+### Auto-deploy from this repo (PL-775)
 
-`main` is the deploy branch. Connect the platform to it and let it run
-`npm ci && npm run build` with output `dist/`. Nothing in the build depends on
-a secret, so pull-request previews are safe to switch on.
+**`main` is the deploy branch and it deploys itself.** Push to `main` — through
+the GitHub web editor is fine — and the site updates on its own. No dispatch,
+no ticket, no one to ask.
 
-If you would rather run it from CI onto your own server, that is the whole job:
+`.github/workflows/deploy-prod.yml` does it:
 
-```yaml
-- uses: actions/setup-node@v4
-  with: { node-version: 20, cache: npm }
-- run: npm ci
-- run: npm run build
-# then ship dist/ to the host
-```
+1. builds the image (`Dockerfile`: `node:20-alpine` → `npm ci && npm run build`,
+   then `nginx:alpine` serving `dist/`);
+2. pushes it to GHCR as `ghcr.io/techchain-innovations/pl-fe-landing-marathon`,
+   tagged both `sha-<12>` and `prod`;
+3. deploys on the prod box through the self-hosted runner `pl-prod-a`
+   (`/opt/pl-prod/marathon`, container `pl-fe-landing-marathon-prod`, port 3002);
+4. healthchecks for 90 s and **rolls back to the previous image** if the new one
+   does not answer 200.
+
+The caching rules above are enforced in `nginx.conf`, which ships inside the
+image: `/assets/` immutable for a year, `index.html` `no-store`, `public/`
+assets hours. Editing text therefore reaches returning visitors immediately.
+
+Infrastructure notes (nginx vhost, Cloudflare, port map) live in
+`pl-infra/docs/DEPLOYMENT-MAP.md`.
 
 ---
 

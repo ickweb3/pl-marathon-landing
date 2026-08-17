@@ -1,0 +1,77 @@
+name: deploy-prod
+# Прод = marathon.pershiledy.com (сервер A, порт 3002).
+#
+# На відміну від решти PL-репо тут тригер — АВТОМАТИЧНИЙ push у main (PL-775):
+# мета тікета в тому, щоб правку тексту можна було внести без звернення до команди.
+# Запобіжники замість ручного гейта: healthcheck + автоматичний rollback на попередній образ.
+#
+# Потребує на боксі /opt/pl-prod/marathon/docker-compose.yml
+# (image ghcr.io/...:${IMAGE_TAG}, container_name pl-fe-landing-marathon-prod,
+#  ports 127.0.0.1:3002:80).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:        # перевикотити без коміту
+concurrency: { group: deploy-prod-marathon, cancel-in-progress: false }
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs: { sha_tag: "${{ steps.meta.outputs.sha_tag }}" }
+    steps:
+      - name: Guard — prod deploys ONLY from main
+        if: github.ref != 'refs/heads/main'
+        run: |
+          echo "::error::dispatch with --ref main (got ${{ github.ref }})"
+          exit 1
+      - uses: actions/checkout@v4
+      - id: meta
+        run: echo "sha_tag=sha-${GITHUB_SHA::12}" >> "$GITHUB_OUTPUT"
+      - uses: docker/login-action@v3
+        with: { registry: ghcr.io, username: "${{ github.actor }}", password: "${{ secrets.GITHUB_TOKEN }}" }
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/techchain-innovations/pl-fe-landing-marathon:${{ steps.meta.outputs.sha_tag }}
+            ghcr.io/techchain-innovations/pl-fe-landing-marathon:prod
+
+  deploy:
+    needs: build
+    environment: production
+    runs-on: [self-hosted, pl-prod-a]
+    steps:
+      - name: Capture current image for rollback
+        id: prev
+        run: |
+          CUR=$(sudo docker inspect pl-fe-landing-marathon-prod --format '{{.Config.Image}}' 2>/dev/null || true)
+          CUR=${CUR:-none}
+          printf 'image=%s\n' "$CUR" >> "$GITHUB_OUTPUT"
+          echo "previous image: $CUR"
+      - name: GHCR login (root)
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | sudo docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+      - name: Pull + up
+        working-directory: /opt/pl-prod/marathon
+        env: { IMAGE_TAG: "${{ needs.build.outputs.sha_tag }}" }
+        run: |
+          sudo docker compose pull
+          sudo docker compose up -d
+      - name: Healthcheck (90s)
+        run: |
+          for i in $(seq 1 18); do
+            code=$(curl -sL -o /dev/null -w '%{http_code}' http://127.0.0.1:3002/ || true)
+            echo "attempt $i -> $code"; [ "$code" = "200" ] && exit 0; sleep 5
+          done
+          echo FAILED; exit 1
+      - name: Rollback on failure
+        if: failure() && steps.prev.outputs.image != 'none' && steps.prev.outputs.image != ''
+        working-directory: /opt/pl-prod/marathon
+        run: |
+          PREV_TAG=$(echo "${{ steps.prev.outputs.image }}" | sed 's/.*://')
+          IMAGE_TAG="$PREV_TAG" sudo docker compose up -d
+          for i in $(seq 1 12); do code=$(curl -sL -o/dev/null -w '%{http_code}' http://127.0.0.1:3002/ || true); [ "$code" = 200 ] && exit 0; sleep 5; done
+          echo "ROLLBACK FAILED"; exit 1

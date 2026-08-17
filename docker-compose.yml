@@ -1,0 +1,9 @@
+# PL-775 — референсна копія того, що лежить на проді в /opt/pl-prod/marathon/.
+# Прод-файл живе на боксі A (146.19.238.97) і НЕ підтягується звідси автоматично —
+# тримаємо копію в репо, щоб конфіг не існував в одному екземплярі на сервері.
+services:
+  app:
+    image: ghcr.io/techchain-innovations/pl-fe-landing-marathon:${IMAGE_TAG:-prod}
+    container_name: pl-fe-landing-marathon-prod   # ← ім'я для rollback-inspect у workflow
+    restart: unless-stopped
+    ports: ["127.0.0.1:3002:80"]
