@@ -275,9 +275,12 @@ and italic) — both named by the frame.
 
 ## Open items
 
-1. **FAQ answers 2–9 need a client read.** The frame draws those rows
-   collapsed, so no answer existed. They are written from this project's docs
-   and Pershi Ledi's, and each one names its source in the header of
+1. **Four FAQ answers still need a client read — 3, 4, 8 and 9.** The frame
+   draws every row but the first collapsed, so no answer existed. The client
+   supplied answers 2, 5, 6 and 7 on 2026-08-17 and those are now verbatim
+   (question 7 was re-worded by the client too, so that row no longer matches
+   the frame's question text). The remaining four are written from this
+   project's docs and Pershi Ledi's, each naming its source in the header of
    `shared/faq.ts`. Nothing is invented — but nobody has approved the wording.
 2. **CTA target.** `shared/config.ts` → `ctaUrl` points at
    `pershiledy.com/registration`. Confirm registration vs the community club vs

@@ -1,31 +1,34 @@
 /**
  * FAQ copy.
  *
- * The nine questions are verbatim from Figma node 1:496. Answer 1 is verbatim
- * from the frame too — it is the only one the design draws.
+ * The questions are verbatim from Figma node 1:496 and answer 1 is verbatim
+ * from the frame — it is the only answer the design draws. The frame leaves the
+ * other eight rows collapsed and empty.
  *
- * Answers 2 to 9 are written from the project's own documents, not invented.
- * Each carries the source it rests on:
+ * **Answers 2, 5, 6 and 7 are the client's own words, supplied 2026-08-17.**
+ * They are set verbatim and replace the drafts that stood here. Question 7 was
+ * re-worded by the client too — «Як проходитиме робота в парах?» became «Чи
+ * обов'язково проходити марафон у парі?» — so that one row no longer matches
+ * the frame's question text. The client's wording wins.
  *
- *   2, 6  Sources/Marathon-Brief-2026-08-13.md (task 4 «не переснімати та не
- *         намагатися виглядати ідеально», task 7 public Instagram post) and
- *         modules/review/CONTRACT.md (a participant never reads another
- *         woman's submission).
+ * Where the client's answer differs from the draft it replaced, take the
+ * client's reading as the current one: answer 6 now says most tasks are not
+ * published rather than naming six of seven, and answer 7 leads with "no, it is
+ * not compulsory" rather than describing the matching flow.
+ *
+ * The four still awaiting a client read are drafts written from the project's
+ * own documents, never invented. Each carries the source it rests on:
+ *
  *   3     Mentor block of this landing + Marathon brief: the marathon is about
  *         what to show, and Victoria adds shooting advice.
  *   4     Marathon brief, task 4 — the only device any task names is a phone.
- *   5     CLAUDE.md + Research/Scope-Round-2-2026-08-13.md — "The Mini App is
- *         the surface", every submission happens there, testable on a phone.
- *   7     Marathon brief (pair or solo at the start, bot matches, solo variant)
- *         + Open-Questions #3, #4, #50 (never blocked when a partner goes
- *         quiet).
  *   8     Pershi-Ledi/Content/Welcome-Video-Script.md — "Підступу немає.
  *         Проєкт підтримують європейські фонди".
  *   9     Pershi-Ledi/CLAUDE.md (1 LADIES = 1 UAH) + PL-Marathon
  *         Open-Questions #18/#28 (50 LADIES against a verified ID).
  *
- * Two things deliberately NOT claimed, because no document supports them:
- * an alternative to the public post in task 7, and any eligibility rule.
+ * One thing deliberately NOT claimed, because no document supports it: any
+ * eligibility rule.
  */
 
 export type FaqItem = { question: string; answer: string };
@@ -39,7 +42,7 @@ export const FAQ: FaqItem[] = [
   {
     question: "Я дуже соромлюся камери. Чи зможу виконувати завдання?",
     answer:
-      "Так. Завдання складені так, щоб не треба було виглядати «ідеально» — перезнімати кадр десятки разів не потрібно. Твою роботу бачить лише менторка, інші учасниці — ні.",
+      "Так. Ми будемо рухатися поступово – від знайомства із собою до практики перед камерою. Тут не потрібно виглядати «ідеально». Головне – дозволити собі спробувати й зробити свій крок у проявлення.",
   },
   {
     question: "Чи будемо вчитися фотографуватися?",
@@ -54,17 +57,17 @@ export const FAQ: FaqItem[] = [
   {
     question: "Чи можна проходити марафон із телефону?",
     answer:
-      "Так. Марафон живе в Telegram: завдання, здача робіт, прогрес і рейтинг — усе в застосунку всередині бота. Комп'ютер не потрібен.",
+      "Так. Марафон можна повністю проходити з телефона: спілкування відбуватиметься в Telegram-чаті, а завдання відкриватимуться та здаватимуться через бот.",
   },
   {
     question: "Чи потрібно щось публікувати?",
     answer:
-      "Шість із семи завдань ти надсилаєш лише в бот — їх бачить тільки менторка. Фінальне, сьоме, — це публічний прояв в Instagram: фото, відео або Reels. До нього ти йдеш поступово всі сім днів.",
+      "Більшість завдань не потрібно публікувати. Ти виконуватимеш їх у боті самостійно або разом із партнеркою. Фінальним кроком стане публічний прояв в Instagram – фото, відео або Reels, до якого ти поступово підготуєшся протягом марафону.",
   },
   {
-    question: "Як проходитиме робота в парах?",
+    question: "Чи обов'язково проходити марафон у парі?",
     answer:
-      "На старті ти обираєш: іти в парі чи самостійно. Якщо обереш пару — бот сам підбере тобі партнерку. Парних завдань два, і для тих, хто йде сам, є індивідуальний варіант. Якщо партнерка зникне, ти не застрягнеш: здаєш свою роботу і отримуєш свою оцінку.",
+      "Ні. Ти сама обираєш, як проходити марафон – самостійно чи з партнеркою. Якщо захочеш проходити в парі, бот допоможе знайти партнерку. Якщо комфортніше самостійно – для парних практик буде індивідуальний варіант завдання.",
   },
   {
     question: "Це справді безкоштовно?",
