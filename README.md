@@ -285,7 +285,9 @@ and italic) — both named by the frame.
 2. **CTA target.** `shared/config.ts` → `ctaUrl` points at
    `pershiledy.com/registration`. Confirm registration vs the community club vs
    the bot.
-3. **Mentor Instagram and the store links** are placeholders in `shared/config.ts`.
+3. **The mentor's Instagram** is still a placeholder in `shared/config.ts`. The
+   two store links are real since 2026-08-17. Note that the Apple link needs a
+   storefront code — `apps.apple.com/app/id6774159825` with none answers 404.
 4. **One deliberate deviation from the frame:** the header keeps its designed
    glass look over the hero, then takes a solid brand fill once the hero is
    behind it. The frame only ever draws it over blue; white-on-white would be

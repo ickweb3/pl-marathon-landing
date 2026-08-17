@@ -32,9 +32,18 @@ export const CONFIG = {
     instagramUrl: "https://www.instagram.com/",
   },
 
+  /**
+   * The footer badges, node 4870:9086 / 4870:9091. Both links checked 200 on
+   * 2026-08-17.
+   *
+   * The Apple link MUST carry a storefront code: `apps.apple.com/app/id...`
+   * with none answers 404. `ua` is set because the audience is Ukrainian; the
+   * app is in the Polish storefront too, so `pl` also works if it is ever
+   * wanted.
+   */
   stores: {
-    appStore: "",
-    googlePlay: "",
+    appStore: "https://apps.apple.com/ua/app/id6774159825",
+    googlePlay: "https://play.google.com/store/apps/details?id=com.pershiledy.app",
   },
 } as const;
 
