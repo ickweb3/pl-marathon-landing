@@ -35,7 +35,18 @@ export const CONFIG = {
   /** The platform itself, for anywhere that needs it. */
   platformUrl: "https://pershiledy.com/",
 
-  startDateLabel: "22 серпня",
+  /**
+   * The one place the start date is written. Every visible date on the page
+   * reads it: the hero badge, the «Стартуємо» heading, the third join step and
+   * both closing-CTA paragraphs.
+   *
+   * Moved from «22 серпня» to «29 серпня» on 2026-08-17 at the client's
+   * request. Two things do NOT follow it and must be changed on purpose:
+   * `ctaUrl`'s `utm_content=marafon22082026`, which is an attribution key and
+   * not a date, and `public/og.jpg`, which is a rendered picture of the hero
+   * with the date inside it.
+   */
+  startDateLabel: "29 серпня",
 
   mentor: {
     name: "Вікторія Мирна",

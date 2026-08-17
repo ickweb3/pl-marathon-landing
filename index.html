@@ -16,21 +16,24 @@
     <title>Проявись — безкоштовний онлайн-марафон від Перші Леді</title>
     <meta
       name="description"
-      content="7 днів практик, щоб краще зрозуміти та побачити себе, пройти через страх проявлення та почати сміливіше показувати себе через фото, відео, голос і власні сенси. Старт 22 серпня."
+      content="7 днів практик, щоб краще зрозуміти та побачити себе, пройти через страх проявлення та почати сміливіше показувати себе через фото, відео, голос і власні сенси. Старт 29 серпня."
     />
 
     <!--
-      GO-LIVE: the three absolute URLs below are the ONLY ones in this page.
-      Repoint og:image, og:url and twitter:image at
-      https://marathon.pershiledy.com/ when the domain is served, or the social
-      preview keeps advertising the review host. Everything else is relative.
+      The three absolute URLs below are the ONLY ones in this page; every other
+      URL is relative. They were repointed at the live domain on 2026-08-17.
+
+      The start date appears TWICE here, in both descriptions, and it does not
+      come from `shared/config.ts` — a meta tag cannot read it. Move the date in
+      config and these two strings will still say the old one. `public/og.jpg`
+      has the same problem: it is a rendered picture of the hero, date included.
     -->
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="uk_UA" />
     <meta property="og:title" content="Проявись — безкоштовний онлайн-марафон від Перші Леді" />
     <meta
       property="og:description"
-      content="7 днів практик, щоб краще зрозуміти та побачити себе. Старт 22 серпня."
+      content="7 днів практик, щоб краще зрозуміти та побачити себе. Старт 29 серпня."
     />
     <meta property="og:image" content="https://marathon.pershiledy.com/og.jpg" />
     <meta property="og:image:width" content="1200" />

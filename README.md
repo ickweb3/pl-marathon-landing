@@ -1,8 +1,19 @@
 # pl-marathon-landing — «Проявись»
 
-Marketing landing for the 7-day Pershi Ledi marathon. Start **22.08.2026**.
+Marketing landing for the 7-day Pershi Ledi marathon. Start **29.08.2026**
+(moved from 22.08 by the client on 2026-08-17).
 
-**Target domain: `marathon.pershiledy.com`.** Deploy notes are at the bottom.
+**Live at `marathon.pershiledy.com`**, deployed from
+`TechChain-Innovations/pl-fe-landing-marathon` on a push to `main`. This
+repository is the mirror the page was built in; a change pushed only here does
+NOT reach the site.
+
+> **Moving the start date touches four places, and only one of them is the
+> obvious one.** `shared/config.ts` → `startDateLabel` feeds every visible date
+> on the page. The other three do not read it: the two `<meta>` descriptions in
+> `index.html`, and `public/og.jpg`, which is a rendered picture of the hero
+> with the date inside it. `ctaUrl`'s `utm_content=marafon22082026` is an
+> attribution key, not a date, and stays put unless marketing says otherwise.
 
 Design source: the «Проявляйся» Figma file, frame `v1`, node **`1:245`**,
 1440 × 7678.5 (updated 2026-08-14; supersedes `Landing-courses-PL` node
