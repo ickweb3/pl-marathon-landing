@@ -11,10 +11,20 @@ export const CONFIG = {
    * Every "Приєднатися / Почати безкоштовно" button.
    *
    * The `ref` is how the live PL course landings attribute a registration —
-   * courses.pershiledy.com sends `?ref=10000344&course=<uuid>`. The marathon
-   * has no course id, so only the ref travels. Confirm the ref before launch.
+   * courses.pershiledy.com sends `?ref=10000344&course=<uuid>`. The marathon has
+   * no course id, so only the ref travels.
+   *
+   * The UTM set was supplied by the owner on 2026-08-17 and is verbatim. It is
+   * what separates this landing's registrations from every other PL source in
+   * the reports, so do not edit a parameter to "tidy" it — `utm_content` is the
+   * campaign key (`marafon22082026`).
+   *
+   * Every button on the page reads this one value. If a second CTA ever needs
+   * its own `utm_term`, add a second entry here rather than writing a URL into
+   * a widget.
    */
-  ctaUrl: "https://pershiledy.com/registration?ref=10000344",
+  ctaUrl:
+    "https://pershiledy.com/registration?ref=10000344&utm_source=website&utm_medium=pershiledy&utm_campaign=pershiledy_reg&utm_content=marafon22082026&utm_term=text",
   /**
    * The header pill. On the live sister landing the same button scrolls to the
    * "how to join" block rather than leaving the site — checked 2026-08-14, it

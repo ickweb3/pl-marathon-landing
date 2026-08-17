@@ -167,9 +167,22 @@ asserting `document.documentElement.scrollWidth === window.innerWidth` at each �
 no horizontal overflow at any of the three.
 
 **Where the frame is wrong, the page is not.** The four "7 днів" icons are cut
-from two sprite sheets, and the frame's crop window is shorter than the glyph —
-reproduced verbatim, the compass loses 7px off the top and the bottom. Each icon
-is its own trimmed file instead. Faithful is the default; it is not the goal.
+from two sprite sheets, and the frame's crop window clips the glyph. Each icon is
+its own alpha-trimmed file instead. Faithful is the default; it is not the goal.
+
+**That trim carried a bug for three days, and it is worth knowing about.** The
+frame's icon holder is 80 tall, but the glyph inside it is not — it sits in the
+sheet with air around it. An alpha-trimmed file drawn at `height: 80` therefore
+rendered the glyph 80 tall, between **1.35x and 1.70x** the size the design
+shows, worst on the diamond. Nothing in the code was wrong to read; the number
+80 was simply the wrong number once the file changed shape. The designer spotted
+it by eye before any check did.
+
+Each icon now carries its own height and its seat in the 80px band, measured by
+rendering holders `19:1032` / `19:1038` / `19:1044` / `19:1050` on their own and
+taking the ink box of each. The band stays 80, so the tile height and the 24 gap
+below do not move. **The lesson generalises: when an asset is re-cut, its box
+size stops being a design value and becomes a derived one.**
 
 ---
 
@@ -282,9 +295,11 @@ and italic) — both named by the frame.
    the frame's question text). The remaining four are written from this
    project's docs and Pershi Ledi's, each naming its source in the header of
    `shared/faq.ts`. Nothing is invented — but nobody has approved the wording.
-2. **CTA target.** `shared/config.ts` → `ctaUrl` points at
-   `pershiledy.com/registration`. Confirm registration vs the community club vs
-   the bot.
+2. ~~**CTA target.**~~ Closed 2026-08-17: the owner supplied the tagged URL, so
+   registration is confirmed as the destination. `shared/config.ts` → `ctaUrl`
+   carries the `ref` and the full UTM set verbatim, and every button on the page
+   reads that one value. `utm_content=marafon22082026` is the campaign key —
+   editing a parameter breaks the attribution in the PL reports.
 3. **The mentor's Instagram** is still a placeholder in `shared/config.ts`. The
    two store links are real since 2026-08-17. Note that the Apple link needs a
    storefront code — `apps.apple.com/app/id6774159825` with none answers 404.

@@ -18,30 +18,61 @@ import { Reveal } from "../../shared/ui/Reveal";
  * — the type does not shrink. The footnote moves ABOVE the rail, which is where
  * the phone frame puts it.
  *
- * The frame cuts the four icons out of two sprite sheets, and its crop window is
- * shorter than the glyph — reproduced verbatim the compass loses 7px top and
- * bottom. Each icon is now its own trimmed file, so it renders whole.
+ * The frame cuts the four icons out of two sprite sheets. Reproduced verbatim,
+ * the crop clips the glyph, so each icon is its own alpha-trimmed file here.
+ *
+ * **That trim is why the icons have their own height.** The frame's holder is
+ * 80 tall, but the glyph inside it is not: it sits in the sheet with air around
+ * it. An alpha-trimmed file drawn at `height: 80` therefore renders the glyph
+ * 80 tall — between 1.35x and 1.70x the size the design shows, worst on the
+ * diamond. Measured 2026-08-17 by rendering holders 19:1032 / 19:1038 /
+ * 19:1044 / 19:1050 on their own and taking the ink box of each:
+ *
+ *   compass   59.3 tall, 9.9 from the top of the 80 band
+ *   diamond   47.0 tall, 18.0
+ *   key       54.0 tall, 14.0
+ *   lightning 55.0 tall, 13.0
+ *
+ * The band stays 80, so the tile height and the 24 gap under it do not move.
+ * The same holders serve the phone frame, so one set of numbers covers both.
  */
-type Tile = { icon: string; title: string; text: string };
+type Tile = {
+  icon: string;
+  title: string;
+  text: string;
+  /** Glyph height in the frame, and its offset inside the 80px band. */
+  iconH: number;
+  iconTop: number;
+};
+
+const ICON_BAND = 80;
 
 const TILES: Tile[] = [
   {
     icon: IMAGES.icon1,
+    iconH: 59.3,
+    iconTop: 9.9,
     title: "Побачити себе по-новому",
     text: "Дослідиш свої сильні сторони, цінності та сенси — і помітиш у собі те, чого раніше могла зовсім не бачити.",
   },
   {
     icon: IMAGES.icon2,
+    iconH: 47,
+    iconTop: 18,
     title: "Зрозуміти, що тебе стримує",
     text: "Розберешся зі страхом бути помітною, внутрішнім критиком, порівнянням з іншими та залежністю від чужої оцінки.",
   },
   {
     icon: IMAGES.icon3,
+    iconH: 54,
+    iconTop: 14,
     title: "Знайти свій спосіб проявлятися",
     text: "Зрозумієш, що хочеш транслювати через фото та відео, і спробуєш себе перед камерою з порадами щодо зйомки.",
   },
   {
     icon: IMAGES.icon4,
+    iconH: 55,
+    iconTop: 13,
     title: "Перейти від думок до дії",
     text: "Виконуватимеш практичні завдання та поступово підготуєшся до фінального прояву — власного фото, відео або Reels.",
   },
@@ -66,6 +97,8 @@ const TileShell: FC<{ mobile: boolean; index: number; children: ReactNode }> = (
 
 const ProgramTile: FC<Tile & { index: number; mobile: boolean }> = ({
   icon,
+  iconH,
+  iconTop,
   title,
   text,
   index,
@@ -87,14 +120,32 @@ const ProgramTile: FC<Tile & { index: number; mobile: boolean }> = ({
         filter: SHADOW.tile,
       }}
     >
+      {/* The band is the frame's 80px holder; the glyph keeps its own size and
+          seat inside it. */}
       <Box
-        component="img"
-        src={icon}
-        alt=""
-        aria-hidden
-        loading="lazy"
-        sx={{ height: 80, width: "auto", display: "block", flexShrink: 0 }}
-      />
+        sx={{
+          height: ICON_BAND,
+          width: "100%",
+          flexShrink: 0,
+          display: "flex",
+          alignItems: "flex-start",
+        }}
+      >
+        <Box
+          component="img"
+          src={icon}
+          alt=""
+          aria-hidden
+          loading="lazy"
+          sx={{
+            height: iconH,
+            width: "auto",
+            mt: `${iconTop}px`,
+            display: "block",
+            flexShrink: 0,
+          }}
+        />
+      </Box>
 
       <Box
         sx={{
