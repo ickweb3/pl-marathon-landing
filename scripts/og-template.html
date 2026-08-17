@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <!--
+      Source of `public/og.jpg`, the social preview card. 1200 x 630.
+
+      It used to be a screenshot of the top of the page, which put the
+      navigation bar and a cropped CTA button into every shared link. This is a
+      card built for the purpose: no chrome, one message, the date large enough
+      to read at the size Telegram and Facebook actually show it.
+
+      Regenerate with `node scripts/make-og.mjs` after changing the date or the
+      copy. Every colour and face below is the page's own.
+    -->
+    <style>
+      @font-face {
+        font-family: 'Manrope';
+        font-style: normal;
+        font-weight: 400 800;
+        src: url(../public/fonts/manrope-xn7gYHE41ni1AdIRggOxSuXd.woff2) format('woff2');
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      @font-face {
+        font-family: 'Manrope';
+        font-style: normal;
+        font-weight: 400 800;
+        src: url(../public/fonts/manrope-xn7gYHE41ni1AdIRggexSg.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+2000-206F, U+2122;
+      }
+      @font-face {
+        font-family: 'Playfair Display';
+        font-style: italic;
+        font-weight: 600;
+        src: url(../public/fonts/playfairdisplay-nuFkD-vYSZviVYUb_rj3ij__anPXDTnohkk72xU.woff2) format('woff2');
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+
+      body {
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        font-family: 'Manrope', Arial, sans-serif;
+        /* G.hero, verbatim from providers/ThemeProvider. */
+        background: linear-gradient(
+          196.68487485425027deg,
+          rgb(0, 66, 252) 2.4447%,
+          rgb(59, 110, 255) 83.315%,
+          rgb(0, 66, 252) 165.84%
+        );
+        position: relative;
+        color: #fff;
+      }
+
+      /* The frame's concentric rings, the same decoration the hero carries. */
+      .rings {
+        position: absolute;
+        right: -300px;
+        top: -420px;
+        width: 1180px;
+        height: 1196px;
+        opacity: 0.14;
+        pointer-events: none;
+      }
+
+      /* The source is a 1508 x 2011 cut-out, taller than this card. It is
+         therefore framed in a box rather than sized by width: at any width that
+         reads well she is 880 tall and loses her head off the top. `cover` with
+         the crop pulled to the top keeps the face, and the card cuts her at the
+         hip the way the hero does. */
+      .portrait-box {
+        position: absolute;
+        right: -30px;
+        top: 0;
+        width: 600px;
+        height: 630px;
+        overflow: hidden;
+        -webkit-mask-image: linear-gradient(180deg, #000 86%, transparent 100%);
+        mask-image: linear-gradient(180deg, #000 86%, transparent 100%);
+      }
+      .portrait-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 50% 2%;
+        display: block;
+      }
+
+      .copy {
+        position: absolute;
+        left: 64px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 620px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 22px;
+      }
+
+      .logo { height: 52px; width: auto; display: block; }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 18px;
+        border-radius: 46px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        font-size: 19px;
+        font-weight: 500;
+        letter-spacing: -0.2px;
+        color: #fffefa;
+      }
+
+      h1 {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-style: italic;
+        font-weight: 600;
+        font-size: 96px;
+        line-height: 0.96;
+        letter-spacing: -1px;
+      }
+
+      .sub {
+        font-size: 33px;
+        font-weight: 700;
+        line-height: 1.16;
+        letter-spacing: -0.6px;
+        max-width: 560px;
+      }
+
+      /* The date is the one fact a preview has to carry. */
+      .date {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 12px;
+        padding: 12px 24px;
+        border-radius: 90px;
+        background: #fff;
+        color: #0041f3;
+        font-size: 26px;
+        font-weight: 800;
+        letter-spacing: -0.4px;
+      }
+      .date .sep { color: rgba(0, 65, 243, 0.35); font-weight: 500; }
+      .date .soft { color: #007df3; font-weight: 600; font-size: 23px; }
+    </style>
+  </head>
+  <body>
+    <img class="rings" src="../public/img/rings.svg" alt="" />
+    <div class="portrait-box">
+      <img src="../public/img/hero-portrait.webp" alt="" />
+    </div>
+
+    <div class="copy">
+      <img class="logo" src="../public/img/logo.svg" alt="Перші Леді" />
+      <span class="badge">Безкоштовний онлайн-марафон</span>
+      <h1>Проявись.</h1>
+      <p class="sub">Від страху бути помітною&nbsp;– до сміливості бути собою</p>
+      <span class="date">
+        Старт <span id="date">29 серпня</span>
+        <span class="sep">·</span>
+        <span class="soft">7 днів практик</span>
+      </span>
+    </div>
+  </body>
+</html>

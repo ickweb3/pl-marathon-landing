@@ -203,6 +203,45 @@ size stops being a design value and becomes a derived one.**
 `https://pl-marathon-landing.vercel.app` was the review preview and is no longer
 the reference copy.
 
+## Analytics
+
+**Google Tag Manager, container `GTM-PFQKWKHZ`** — the same container
+`pershiledy.com` and `pl-fe-landing-v2` load. The snippet is in `index.html`:
+the loader high in `<head>`, the `<noscript>` iframe first thing in `<body>`,
+copied from `pl-fe-landing-v2` so the two landings behave identically.
+
+**It is hard-coded, not a build arg,** deliberately and for the same reason
+that repo hard-codes it: a build arg that nobody passes fails silently, and the
+first sign is a campaign with no data.
+
+**There is no Meta Pixel tag in this page and there should not be.** The
+platform's own sources carry none either — the pixel lives inside the GTM
+container, so a second one here would double-count every event.
+
+> **Open, and it is a legal question rather than a technical one:** the page has
+> no consent banner, so GTM fires for everyone including EU visitors. The
+> platform's other surfaces do the same, so this landing is not the place to fix
+> it — but somebody should decide it deliberately.
+
+## The social preview card
+
+`public/og.jpg` is generated, not hand-made:
+
+```bash
+node scripts/make-og.mjs      # scripts/og-template.html -> public/og.jpg
+```
+
+The template is a purpose-built 1200 x 630 card in the page's own colours and
+faces. It reads `startDateLabel` straight out of `shared/config.ts`, so the
+preview cannot drift from the page — change the date in config, run the script.
+
+It used to be a screenshot of the top of the page, which meant every shared link
+carried a navigation bar and a cropped CTA button, and the date was set in the
+hero badge at a size nobody could read in a Telegram preview.
+
+Playwright is an optional dev dependency, used only by this script. The Docker
+build never runs it.
+
 ## Assets and weight
 
 Photographs are **WebP, sized to twice the width the element actually renders

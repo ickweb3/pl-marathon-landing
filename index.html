@@ -5,6 +5,31 @@
          Push у main викочує зміни на marathon.pershiledy.com автоматично (PL-775). -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--
+      Google Tag Manager — container GTM-PFQKWKHZ, the SAME one pershiledy.com
+      and pl-fe-landing-v2 use. It is hard-coded here rather than passed as a
+      build arg, exactly as pl-fe-landing-v2 does it: a missing build arg fails
+      silently and nobody notices until the campaign is over.
+
+      There is no Meta Pixel tag in this page and there should not be. The
+      platform has none in source either — the pixel is configured inside the
+      GTM container, so adding one here would double-count.
+    -->
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-PFQKWKHZ');
+    </script>
+    <!-- End Google Tag Manager -->
     <!-- The Перші Леді mark, white on the brand blue plate. Generated from
          public/img/logo.svg; 16px is included but 32 is what most tabs use. -->
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
@@ -481,6 +506,16 @@
     </style>
   </head>
   <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+      <iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-PFQKWKHZ"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
