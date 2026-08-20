@@ -64,9 +64,18 @@ export const CONFIG = {
    */
   startDateLabel: "29 серпня",
 
+  /**
+   * The mentor card's only link. It shipped as a bare `instagram.com/` from
+   * 2026-08-14 to 2026-08-20 — a button carrying her name that landed on the
+   * Instagram home page. The owner supplied the handle on 2026-08-20 and the
+   * profile answers 200 as «PHOTO MENTOR • PHOTOGRAPHER (@myrna.viktoria)».
+   * The `igsh` parameter is Instagram's own share tag and is kept verbatim, as
+   * it is on the footer's Instagram row.
+   */
   mentor: {
     name: "Вікторія Мирна",
-    instagramUrl: "https://www.instagram.com/",
+    instagramUrl:
+      "https://www.instagram.com/myrna.viktoria?igsh=MWc1cDhsc3ZrajJuYw==",
   },
 
   /**

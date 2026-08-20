@@ -401,9 +401,13 @@ and italic) — both named by the frame.
    carries the `ref` and the full UTM set verbatim, and every button on the page
    reads that one value. `utm_content=marafon22082026` is the campaign key —
    editing a parameter breaks the attribution in the PL reports.
-3. **The mentor's Instagram** is still a placeholder in `shared/config.ts`. The
-   two store links are real since 2026-08-17. Note that the Apple link needs a
-   storefront code — `apps.apple.com/app/id6774159825` with none answers 404.
+3. ~~**The mentor's Instagram.**~~ Closed 2026-08-20: the owner supplied
+   `instagram.com/myrna.viktoria`, which answers 200 as «PHOTO MENTOR •
+   PHOTOGRAPHER». It had shipped as a bare `instagram.com/` since 2026-08-14 —
+   a button under her name that landed on the Instagram home page, and the only
+   dead destination on the page. The two store links are real since 2026-08-17.
+   Note that the Apple link needs a storefront code —
+   `apps.apple.com/app/id6774159825` with none answers 404.
 4. **One deliberate deviation from the frame:** the header keeps its designed
    glass look over the hero, then takes a solid brand fill once the hero is
    behind it. The frame only ever draws it over blue; white-on-white would be
