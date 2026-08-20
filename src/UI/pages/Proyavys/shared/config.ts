@@ -14,6 +14,22 @@ export const CONFIG = {
    * courses.pershiledy.com sends `?ref=10000344&course=<uuid>`. The marathon has
    * no course id, so only the ref travels.
    *
+   * `community` is read by the platform's Registration page (PL-661): after a
+   * successful signup it navigates to `/clubs/<uuid>` instead of the profile.
+   * The uuid below is the marathon club «Перші Леді | Марафон "Проявись"»,
+   * display_id 24 in the backoffice — the two ids are different keys for the
+   * same row, and the backoffice URL shows the one the platform does NOT accept.
+   * There is no whitelist: any community uuid works, and a wrong one lands the
+   * user on an empty club page, so change this only against the real uuid.
+   *
+   * It does NOT join the club. The club page still asks for one click, and that
+   * click opens the community's Telegram invite. Auto-join does not exist.
+   *
+   * `src` is a free-form attribution tag; the platform stores it on the user as
+   * `source_ref` across all four signup flows (email, Google, Facebook,
+   * Telegram). It is server-side attribution and does not replace the UTMs,
+   * which feed GA4.
+   *
    * The UTM set was supplied by the owner on 2026-08-17 and is verbatim. It is
    * what separates this landing's registrations from every other PL source in
    * the reports, so do not edit a parameter to "tidy" it — `utm_content` is the
@@ -24,7 +40,7 @@ export const CONFIG = {
    * a widget.
    */
   ctaUrl:
-    "https://pershiledy.com/registration?ref=10000344&utm_source=website&utm_medium=pershiledy&utm_campaign=pershiledy_reg&utm_content=marafon22082026&utm_term=text",
+    "https://pershiledy.com/registration?ref=10000344&src=marathon_proyavys&community=9edba7c4-9143-4ee2-a426-e86f82344eff&utm_source=website&utm_medium=pershiledy&utm_campaign=pershiledy_reg&utm_content=marafon22082026&utm_term=text",
   /**
    * The header pill. On the live sister landing the same button scrolls to the
    * "how to join" block rather than leaving the site — checked 2026-08-14, it
