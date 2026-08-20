@@ -33,6 +33,24 @@ for.
 | Менторка | `19:1111` | 390 × 658 |
 | Закриваючий CTA | `19:1170` | 390 × 768 |
 
+**The designer re-shot the join section on 2026-08-20.** Node `1:455` replaces
+`4882:1062`: same three cards, same geometry, two new screenshots.
+
+| What changed | Node |
+|---|---|
+| Card 2's laptop now shows Ком'юніті → Клуби with the real marathon club | `1:480` |
+| A 112 x 94 popup zooms into that club card, beside the cursor | `80:279` |
+| Card 3 dropped the verification modal for the Telegram welcome message | `80:283` |
+
+The section has **no phone artboard**, so the phone layout is derived. A whole
+desktop screen at 270px is unreadable, so the phone's card 2 shows the club card
+on its own — cut to exactly the window `80:279` zooms into, which is why one
+crop serves both. Card 3 keeps the frame's own composition: a 217-wide phone,
+bottom clipped by the card.
+
+> **The frame's card 3 still reads «22 серпня».** The page reads
+> `startDateLabel` and says 29. One message to the designer closes it.
+
 > **Assets: take the fill, never the render.** `download_assets` on a
 > single-image node returns a rendered export with the node's own background
 > baked in. On the mentor card that arrives as a white plate over the blue.
@@ -54,7 +72,7 @@ string in this repo is estimated from a screenshot.
 | 7 днів | `4882:870` |
 | Менторка | `4882:1024` |
 | Подарунки | `4905:1436` |
-| Стартуємо 22 серпня | `4882:1062` |
+| Стартуємо 29 серпня | `1:455` (was `4882:1062`) |
 | Питання перед стартом | `4882:1137` |
 | Закриваючий CTA | `4882:1148` |
 | Footer | `4903:1202` |

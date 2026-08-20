@@ -7,10 +7,18 @@ import { CtaButton } from "../../shared/ui/CtaButton";
 import { FixedCanvas } from "../../shared/ui/FixedCanvas";
 
 /**
- * "Стартуємо 22 серпня" — Figma node 4882:1062, 1344 x 730, radius 53.
+ * "Стартуємо 29 серпня" — Figma node 1:455, 1344 x 730, radius 53.
  * Content band 1248 wide, three 400 x 440 cards, gap 24, then the glass button.
  * Each card carries an artwork that bleeds past its padding box, so the cards
  * are composed absolutely exactly as the frame does.
+ *
+ * The designer re-shot cards 2 and 3 on 2026-08-20 (node 1:455 supersedes
+ * 4882:1062). Card 2's laptop now shows Ком'юніті → Клуби with the marathon
+ * club, and a 112 x 94 popup (node 80:279) zooms into that club card. Card 3
+ * dropped the verification modal for the Telegram welcome message in an
+ * iPhone mockup (node 80:283). The frame's own copy still reads
+ * "22 серпня" in card 3 — the page reads CONFIG.startDateLabel instead, so it
+ * says 29. Worth one message to the designer.
  */
 
 const CardText: FC<{ title: ReactNode; body: string }> = ({ title, body }) => (
@@ -74,10 +82,13 @@ const CARD_SX = {
 };
 
 /**
- * `zoom` frames a window on the artwork instead of fitting the whole of it.
- * Step 2 is a desktop UI capture: shown whole at 280px nothing in it is
- * legible, so the card leans into the part that carries the meaning.
+ * This section has no phone artboard, so the phone layout is derived — and a
+ * whole desktop screen at 270px is unreadable. Cards 1 and 2 therefore show a
+ * picture cut to the part that carries the meaning; card 3 keeps the frame's
+ * own composition, a 217-wide phone clipped by the card's bottom edge.
  */
+const PHONE_ART_H = 300;
+
 const STEPS_MOBILE = [
   {
     num: IMAGES.num01,
@@ -87,14 +98,14 @@ const STEPS_MOBILE = [
   },
   {
     num: IMAGES.num02,
-    art: IMAGES.step2Profile,
-    zoom: { ratio: "16 / 10", position: "8% 12%", scale: 1.75 },
+    art: IMAGES.step2Club,
     title: "Ком'юніті → Клуби → «Проявись»",
     body: "Одразу після реєстрації знайдеш клуб марафону в розділі Ком'юніті.",
   },
   {
     num: IMAGES.num03,
     art: IMAGES.step3,
+    device: true,
     title: "Приєднайся і стартуй",
     body: `Натисни «Приєднатися» в клубі — і ${CONFIG.startDateLabel} отримаєш перше завдання.`,
   },
@@ -169,14 +180,13 @@ export const JoinSection: FC = () => {
               }}
             >
               <CardText title={s.title} body={s.body} />
-              {"zoom" in s && s.zoom ? (
+              {"device" in s && s.device ? (
                 <Box
                   sx={{
                     position: "relative",
                     width: "100%",
+                    height: PHONE_ART_H,
                     mt: "16px",
-                    aspectRatio: s.zoom.ratio,
-                    borderRadius: "16px",
                     overflow: "hidden",
                   }}
                 >
@@ -187,13 +197,11 @@ export const JoinSection: FC = () => {
                     loading="lazy"
                     sx={{
                       position: "absolute",
-                      inset: 0,
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      objectPosition: s.zoom.position,
-                      transform: `scale(${s.zoom.scale})`,
-                      transformOrigin: s.zoom.position,
+                      left: "50%",
+                      top: 0,
+                      transform: "translateX(-50%)",
+                      width: 217,
+                      maxWidth: "none",
                       display: "block",
                     }}
                   />
@@ -291,10 +299,10 @@ export const JoinSection: FC = () => {
             sx={{
               position: "absolute",
               bottom: -83.59,
-              left: "calc(100% - 0.64px)",
+              left: "calc(100% - 3.54px)",
               transform: "translateX(-50%)",
-              width: 1106.712,
-              height: 1106.712,
+              width: 1100.91,
+              height: 1096.663,
               mixBlendMode: "screen",
               display: "flex",
               alignItems: "center",
@@ -501,6 +509,7 @@ export const JoinSection: FC = () => {
                       }}
                     />
                   </Box>
+                  {/* Laptop screen — node 1:480 */}
                   <Box
                     aria-hidden
                     sx={{
@@ -520,10 +529,40 @@ export const JoinSection: FC = () => {
                       loading="lazy"
                       sx={{
                         position: "absolute",
-                        height: "151.47%",
-                        left: 0,
-                        top: "-0.83%",
-                        width: "100%",
+                        height: "100%",
+                        left: "-0.11%",
+                        top: "-4.29%",
+                        width: "121.96%",
+                        maxWidth: "none",
+                        display: "block",
+                      }}
+                    />
+                  </Box>
+                  {/* Popup on the marathon club — node 80:279, the same fill
+                      at the same density, zoomed to that one card */}
+                  <Box
+                    aria-hidden
+                    sx={{
+                      position: "absolute",
+                      left: 248,
+                      top: 241.63,
+                      width: 112,
+                      height: 94,
+                      borderRadius: "7px",
+                      overflow: "hidden",
+                    }}
+                  >
+                    <Box
+                      component="img"
+                      src={IMAGES.step2Profile}
+                      alt=""
+                      loading="lazy"
+                      sx={{
+                        position: "absolute",
+                        height: "234.01%",
+                        left: "-263.73%",
+                        top: "-94.08%",
+                        width: "367.78%",
                         maxWidth: "none",
                         display: "block",
                       }}
@@ -547,8 +586,8 @@ export const JoinSection: FC = () => {
                     aria-hidden
                     sx={{
                       position: "absolute",
-                      left: 312,
-                      top: 304,
+                      left: 315,
+                      top: 308.63,
                       width: 45.311,
                       height: 45.311,
                       display: "flex",
@@ -573,14 +612,17 @@ export const JoinSection: FC = () => {
                     title="Приєднайся і стартуй"
                     body={`Натисни «Приєднатися» в клубі — і ${CONFIG.startDateLabel} отримаєш перше завдання.`}
                   />
+                  {/* iPhone — node 80:283. The file is pre-cut to this exact
+                      window, so it is drawn at inset 0; the card's own
+                      overflow clips the phone's bottom, as the frame does. */}
                   <Box
                     aria-hidden
                     sx={{
                       position: "absolute",
-                      left: 102,
-                      top: 90.12,
-                      width: 348.576,
-                      height: 348.576,
+                      left: 158,
+                      top: 128.63,
+                      width: 217,
+                      height: 452.581,
                       overflow: "hidden",
                     }}
                   >
@@ -591,10 +633,10 @@ export const JoinSection: FC = () => {
                       loading="lazy"
                       sx={{
                         position: "absolute",
-                        left: "-1.32%",
-                        top: "1.68%",
-                        width: "100.01%",
-                        height: "100.01%",
+                        inset: 0,
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
                         maxWidth: "none",
                         display: "block",
                       }}
