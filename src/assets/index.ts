@@ -61,8 +61,17 @@ export const IMAGES = {
   ladiesCoin: img("ladies-coin.webp"),
   prizeRings: img("prize-rings.svg"),
 
-  // Join steps — node 1:455 (was 4882:1062; the designer re-shot cards 2 and 3
-  // on 2026-08-20, so the screenshots below are the new ones)
+  /**
+   * Join steps — node 1:455 (was 4882:1062; the designer re-shot cards 2 and 3
+   * on 2026-08-20, so the screenshots below are the new ones).
+   *
+   * The three files re-cut that day carry a content hash in the name, and any
+   * picture replaced here must do the same. Everything under `public/` is
+   * served `max-age=86400` under its own filename, so a redrawn picture at the
+   * old name reaches a returning visitor a day late — which is exactly what
+   * happened on 2026-08-20: the site was right and every browser that had
+   * opened it before drew the old card into the new frame.
+   */
   step1: img("step-1.webp"),
   step2Macbook: img("step-2-macbook.webp"),
   /**
@@ -70,19 +79,19 @@ export const IMAGES = {
    * card: the laptop screen (node 1:480) and the popup that zooms into the
    * marathon club (node 80:279), both drawing it 411.9 CSS px wide.
    */
-  step2Profile: img("step-2-profile.webp"),
+  step2Profile: img("step-2-profile.463f6364.webp"),
   /**
    * The phone has no artboard for this section, and a whole desktop screen at
    * 270px is unreadable — so the phone card shows the club card on its own,
    * cut to exactly the window node 80:279 zooms into.
    */
-  step2Club: img("step-2-club.webp"),
+  step2Club: img("step-2-club.47767812.webp"),
   /**
    * The Telegram welcome message, cut to the 217 x 452.581 window node 80:283
    * shows, so the card draws it at inset 0. Alpha-preserved: the mockup is a
    * cut-out phone, not a picture on white.
    */
-  step3: img("step-3.webp"),
+  step3: img("step-3.413e85e1.webp"),
   joinEllipseA: img("join-ellipse-a.svg"),
   joinEllipseB: img("join-ellipse-b.svg"),
   joinVectorR: img("join-vector-r.svg"),

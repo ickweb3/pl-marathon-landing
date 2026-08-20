@@ -271,6 +271,20 @@ a 97px box, so 168 CSS px, so the file is 336px, not the 1600 it exported at.
 Re-deriving a target after a design change is arithmetic on the widget, not a
 guess. Quality 90, alpha preserved.
 
+**A redrawn picture needs a new filename.** Everything under `public/` is served
+`max-age=86400` under its own name, so replacing the bytes at the old name
+reaches a returning visitor a day late. On 2026-08-20 the join section shipped
+correctly and every browser that had opened the page before drew the *old* card
+into the *new* frame — the verification modal stretched into the phone's box.
+The three files re-cut that day therefore carry a content hash
+(`step-3.413e85e1.webp`), and the next picture to change must take one too:
+
+```bash
+h=$(shasum -a 1 public/img/<name>.webp | cut -c1-8)   # then rename and update src/assets/index.ts
+```
+
+Only `dist/assets/*` is hashed by the build; `public/` is copied verbatim.
+
 Fonts are **self-hosted** in `public/fonts` with the `@font-face` block inlined
 in `index.html`; Google Fonts was a render-blocking third-party request. Manrope
 is variable, so one file per unicode subset covers every weight. Three faces are
