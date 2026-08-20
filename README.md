@@ -307,6 +307,18 @@ Serve `dist/` at the domain root. Points worth knowing before you wire it up:
 the GitHub web editor is fine — and the site updates on its own. No dispatch,
 no ticket, no one to ask.
 
+> **Push to `techchain`, not only to `origin`.** This repo lives on two remotes:
+> `origin` = `ickweb3/pl-marathon-landing` (where the work happens) and
+> `techchain` = `TechChain-Innovations/pl-fe-landing-marathon` (where the deploy
+> happens). Only the second one can deploy: step 2 below pushes the image into
+> the `techchain-innovations` GHCR namespace but authenticates with the running
+> repo's `GITHUB_TOKEN`, and the self-hosted runner belongs to that org too. Run
+> from `origin`, the build dies with
+> `denied: permission_denied: The requested installation does not exist` and
+> `deploy` is skipped. **A red `deploy-prod` on the ickweb3 side is expected and
+> means nothing** — check the run on `TechChain-Innovations` before believing a
+> deploy failed. `git push origin main && git push techchain main`.
+
 `.github/workflows/deploy-prod.yml` does it:
 
 1. builds the image (`Dockerfile`: `node:20-alpine` → `npm ci && npm run build`,
